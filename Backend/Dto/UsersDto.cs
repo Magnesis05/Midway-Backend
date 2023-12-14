@@ -1,13 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Backend.Models;
-using FluentValidation;
-
-namespace Backend.Models
+﻿namespace Backend.Dto
 {
-    using FluentValidation;
-    public class Users
+    public class UsersDto
     {
-        [Key]
         public int Id { get; set; }
         public string first_name { get; set; }
         public string last_name { get; set; }
@@ -16,9 +10,5 @@ namespace Backend.Models
         public string email { get; set; }
         public string password { get; set; }
         public string type_of_user { get; set; }
-        public List<Allergies>? Allergies { get; set; }
-        public ICollection<Bookings>? Bookings_Id { get; set; }
-
     }
-
 }
