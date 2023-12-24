@@ -6,7 +6,7 @@ namespace Backend.Models
     {
         [Key]
         public int Id { get; set; }
-        public Users booking_user_id { get; set; }
+        public User booking_user_id { get; set; }
         public Restaurants booking_restaurant_id { get; set; }
         public DateTime created_at { get; set; }
         public bool accepted_by_manager { get; set; }

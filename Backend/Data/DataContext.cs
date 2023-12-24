@@ -25,22 +25,31 @@ namespace Backend.Data
         .WithMany(e => e.AddressId)
         .UsingEntity("RestaurantsAddresses");
 
-            modelBuilder.Entity<Allergies>()
-        .HasMany(e => e.Users)
-        .WithMany(e => e.Allergies)
-        .UsingEntity("UsersAllergies");
+      
 
-            modelBuilder.Entity<Users>()
+            modelBuilder.Entity<User>()
        .HasMany(e => e.Bookings_Id)
        .WithOne(e => e.booking_user_id);
 
             modelBuilder.Entity<Restaurants>()
             .HasMany(e => e.Bookings_Id)
             .WithOne(e => e.booking_restaurant_id);
+
+            modelBuilder.Entity<UserAllergies>()
+                    .HasKey(pc => new { pc.UserId, pc.AllergieId });
+            modelBuilder.Entity<UserAllergies>()
+                    .HasOne(p => p.User)
+                    .WithMany(pc => pc.UserAllergies)
+                    .HasForeignKey(p => p.UserId);
+            modelBuilder.Entity<UserAllergies>()
+                    .HasOne(p => p.Allergies)
+                    .WithMany(pc => pc.UserAllergies)
+                    .HasForeignKey(c => c.AllergieId);
         }
         
-        public DbSet<Users> Users { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Allergies> Allergies { get; set; }
+        public DbSet<UserAllergies> UserAllergies { get; set; }
         public DbSet<Restaurants> Restaurants { get; set; }
         public DbSet<Address> Address { get; set; }
         public DbSet<Bookings> Bookings { get; set; }

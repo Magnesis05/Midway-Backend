@@ -1,6 +1,10 @@
-﻿namespace Backend.Dto
+﻿using System.ComponentModel.DataAnnotations;
+using Backend.Models;
+using FluentValidation;
+namespace Backend.Dto
+    
 {
-    public class UsersDto
+    public class UserDto
     {
         public int Id { get; set; }
         public string first_name { get; set; }

@@ -4,6 +4,7 @@ using Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231214103153_Fourth")]
+    partial class Fourth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,7 +136,7 @@ namespace Backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("created_at")
+                    b.Property<DateTime>("created_at")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("email")
@@ -164,21 +167,6 @@ namespace Backend.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Backend.Models.UserAllergies", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AllergieId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "AllergieId");
-
-                    b.HasIndex("AllergieId");
-
-                    b.ToTable("UserAllergies");
-                });
-
             modelBuilder.Entity("RestaurantsAddresses", b =>
                 {
                     b.Property<int>("AddressIdId")
@@ -192,6 +180,21 @@ namespace Backend.Migrations
                     b.HasIndex("RestaurantsId");
 
                     b.ToTable("RestaurantsAddresses");
+                });
+
+            modelBuilder.Entity("UsersAllergies", b =>
+                {
+                    b.Property<int>("AllergiesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AllergiesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("UsersAllergies");
                 });
 
             modelBuilder.Entity("Backend.Models.Bookings", b =>
@@ -213,25 +216,6 @@ namespace Backend.Migrations
                     b.Navigation("booking_user_id");
                 });
 
-            modelBuilder.Entity("Backend.Models.UserAllergies", b =>
-                {
-                    b.HasOne("Backend.Models.Allergies", "Allergies")
-                        .WithMany("UserAllergies")
-                        .HasForeignKey("AllergieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Backend.Models.User", "User")
-                        .WithMany("UserAllergies")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Allergies");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("RestaurantsAddresses", b =>
                 {
                     b.HasOne("Backend.Models.Address", null)
@@ -247,9 +231,19 @@ namespace Backend.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Backend.Models.Allergies", b =>
+            modelBuilder.Entity("UsersAllergies", b =>
                 {
-                    b.Navigation("UserAllergies");
+                    b.HasOne("Backend.Models.Allergies", null)
+                        .WithMany()
+                        .HasForeignKey("AllergiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Backend.Models.Restaurants", b =>
@@ -260,8 +254,6 @@ namespace Backend.Migrations
             modelBuilder.Entity("Backend.Models.User", b =>
                 {
                     b.Navigation("Bookings_Id");
-
-                    b.Navigation("UserAllergies");
                 });
 #pragma warning restore 612, 618
         }

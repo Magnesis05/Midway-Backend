@@ -8,6 +8,6 @@ namespace Backend.Models
         
         public int Id { get; set; }
         public string name { get; set; }
-        public List<Users> Users { get; set; }
+        public ICollection<UserAllergies> UserAllergies { get; set; }
     }
 }
