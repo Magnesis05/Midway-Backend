@@ -10,6 +10,10 @@ namespace Backend.Mapper
         {
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
+            CreateMap<User, AllergiesDto>();
+            CreateMap<Allergies, AllergiesDto>();
+            CreateMap<AllergiesDto, Allergies>();
+
         }
     }
 }

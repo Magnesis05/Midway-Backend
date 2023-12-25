@@ -8,6 +8,7 @@ namespace Backend.Interfaces
         ICollection<User> GetUsers();
         User GetUser(int id);
         User GetUserTrimToUpper(UserDto userCreate);
+        ICollection<Allergies> GetAllergieOfUser(int userId);
         bool CreateUser(int allergieId, User user);
         bool UserExists(int userId);
         bool UpdateUser(int allergieId, User user);

@@ -34,6 +34,7 @@ public class UsersController : Controller
         _mapper = mapper;
     }
 
+
     [HttpGet]
     [ProducesResponseType(200, Type = typeof(IEnumerable<User>))]
     public IActionResult GetUsers()
@@ -54,6 +55,25 @@ public class UsersController : Controller
         if (!ModelState.IsValid)
             return BadRequest();
         return Ok(user);
+    }
+
+    [HttpGet("{userId}/allergies")]
+    [ProducesResponseType(200, Type = typeof(User))]
+    [ProducesResponseType(400)]
+    public IActionResult GetAllergieOfUser(int userId)
+    {
+        if (!_userRepository.UserExists(userId))
+        {
+            return NotFound();
+        }
+
+        var userAllergie = _mapper.Map<List<AllergiesDto>>(
+            _userRepository.GetAllergieOfUser(userId));
+
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        return Ok(userAllergie);
     }
 
     [HttpPost("CreateUser")]

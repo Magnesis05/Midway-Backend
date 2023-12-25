@@ -18,6 +18,10 @@ namespace Backend.Repositories
         {
             _context = context;
         }
+        public ICollection<Allergies> GetAllergieOfUser(int userId)
+        {
+            return _context.UserAllergies.Where(p => p.User.Id == userId).Select(o => o.Allergies).ToList();
+        }
         public bool DeleteUser(User user)
         {
             _context.Remove(user);
@@ -27,6 +31,7 @@ namespace Backend.Repositories
         {
             return _context.Users.OrderBy(p => p.Id).ToList();
         }
+        
 
         public User GetUser(int id)
         {
